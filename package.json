@@ -9,7 +9,11 @@
   "private": true,
   "scripts": {
     "lint": "npx eslint . --ext .ts",
-    "lint:fix": "npx eslint . --ext .ts --fix"
+    "lint:fix": "npx eslint . --ext .ts --fix",
+    "deploy": "keystone build && keystone prisma migrate deploy",
+    "dev": "keystone dev",
+    "postinstall": "keystone postinstall",
+    "start": "keystone start"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.2",
