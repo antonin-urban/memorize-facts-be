@@ -15,7 +15,7 @@ export const Tag = list({
     ownerId,
   },
   hooks: {
-    resolveInput: addOwner,
+    resolveInput: addOwner as any,
   },
   access: baseAccessControl,
 });

@@ -12,4 +12,7 @@ export const ownerId = text({
       fieldMode: 'read',
     },
   },
+  graphql: {
+    omit: true,
+  },
 });

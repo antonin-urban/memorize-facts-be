@@ -74,8 +74,8 @@ export const baseAccessControl: ListAccessControl<BaseListTypeInfo> = {
     create: isUserLogged,
   },
   item: {
-    update: isCurrentUserData,
-    delete: isCurrentUserData,
+    update: isCurrentUserData as any,
+    delete: isCurrentUserData as any,
   },
   filter: {
     query: ownerOnlyAccessFilter,

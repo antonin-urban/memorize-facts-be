@@ -26,8 +26,8 @@ export const User = list({
       create: isUserLogged,
     },
     item: {
-      update: isCurrentUserOrAdmin,
-      delete: isCurrentUserOrAdmin,
+      update: isCurrentUserOrAdmin as any,
+      delete: isCurrentUserOrAdmin as any,
     },
     filter: {
       query: ownerOnlyAccessFilter,

@@ -24,13 +24,13 @@ export const Fact = list({
     name: text({ validation: { isRequired: true } }),
     description: text({ validation: { isRequired: true } }),
     deadline: timestamp(),
-    active: checkbox({ access: { update: passDeadlineUpdateRestriction } }),
+    active: checkbox({ access: { update: passDeadlineUpdateRestriction as any } }),
     schedules: relationship({ ref: 'Schedule', many: true }), //many to many
     tags: relationship({ ref: 'Tag', many: true }), //many to many
     ownerId,
   },
   hooks: {
-    resolveInput: addOwner,
+    resolveInput: addOwner as any,
   },
   access: baseAccessControl,
 });

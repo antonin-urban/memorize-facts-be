@@ -18,7 +18,9 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    'no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': ['Error'],
+    '@typescript-eslint/no-explicit-any': 'off', //there are some problems in Keystone where proper typing is not achievable
     'prettier/prettier': [
       'warn',
       {

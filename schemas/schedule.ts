@@ -1,20 +1,49 @@
 import { list } from '@keystone-6/core';
 import { text, select, json } from '@keystone-6/core/fields';
+import Ajv from 'ajv';
 import { baseAccessControl } from '../utils/accessControlHelper';
 import { ownerId } from '../utils/fieldsHelper';
 import { addOwner } from '../utils/hooksHelper';
-import { BaseItemExtended } from './interfaces';
+import { formatOutput } from '../utils/utils';
+import { BaseItemExtended, CUSTOM_ERROR_CODES } from './interfaces';
 
 const SCHEDULE_PARAMETERS_DEFAULT: ScheduleParameters = {
   interval: 0,
-  notifyTimes: ['9:00', '12:00', '18:00'],
-  dayOfWeek: [0, 1, 2, 3, 4, 5, 6],
+  notifyTimes: ['08:00:00+00:00', '12:00:00+00:00', '16:00:00+00:00'],
+  dayOfWeek: [true, true, true, true, true, true, true],
+};
+
+const ajv = new Ajv();
+
+const scheduleParametersJsonSchema: object = {
+  type: 'object',
+  properties: {
+    interval: { type: 'integer', multipleOf: 10, minimum: 10 },
+    notifyTimes: {
+      type: 'array',
+      items: {
+        type: 'string',
+        format: 'time',
+        minItems: 1,
+      },
+    },
+    dayOfWeek: {
+      type: 'array',
+      items: {
+        type: 'boolean',
+      },
+      minItems: 7,
+      maxItems: 7,
+    },
+  },
+  required: ['dayOfWeek'],
+  additionalProperties: false,
 };
 
 export interface ScheduleParameters {
   interval: number; // in minutes
   notifyTimes: string[]; // HH:MM
-  dayOfWeek: number[]; // 0-6 (0 is Monday, 6 is Sunday)
+  dayOfWeek: boolean[]; // 7 (0 is Monday, 6 is Sunday; true is include, false is exclude)
 }
 
 export interface Schedule extends BaseItemExtended {
@@ -41,11 +70,67 @@ export const Schedule = list({
       defaultValue: {
         ...SCHEDULE_PARAMETERS_DEFAULT,
       },
+      hooks: {
+        validateInput: async ({ item, resolvedData, addValidationError }) => {
+          if (!resolvedData.scheduleParameters) {
+            return;
+          }
+
+          const currentDbSchedule = item as Schedule;
+
+          let scheduleParametersObject: ScheduleParameters;
+          try {
+            console.debug('validateInput', { resolvedData });
+            scheduleParametersObject = JSON.parse(resolvedData.scheduleParameters);
+          } catch (jsonParseError) {
+            addValidationError(formatOutput(CUSTOM_ERROR_CODES.JSON_PARSE_FAIL, jsonParseError.message));
+            return;
+          }
+
+          try {
+            const validateFunction = ajv.compile(scheduleParametersJsonSchema);
+            const jsonSchemaValidationResult = validateFunction(scheduleParametersObject);
+
+            if (!jsonSchemaValidationResult) {
+              addValidationError(
+                formatOutput(
+                  CUSTOM_ERROR_CODES.JSON_SCHEMA_VALIDATION_FAIL,
+                  ...validateFunction.errors.map((x) => `schemaPath: ${x.schemaPath}, error: ${x.message}`),
+                ),
+              );
+              return;
+            }
+          } catch (error) {
+            addValidationError(formatOutput(CUSTOM_ERROR_CODES.JSON_SCHEMA_VALIDATION_FAIL, error.message));
+            return;
+          }
+
+          if (
+            (!resolvedData.type &&
+              currentDbSchedule.type === ScheduleType.NOTIFY_EVERY &&
+              !scheduleParametersObject.interval) ||
+            (resolvedData.type && resolvedData.type === ScheduleType.NOTIFY_EVERY && !scheduleParametersObject.interval)
+          ) {
+            addValidationError(formatOutput(CUSTOM_ERROR_CODES.MISSING_JSON_PROPERTY, 'interval'));
+            return;
+          }
+
+          if (
+            (!resolvedData.type &&
+              currentDbSchedule.type === ScheduleType.NOTIFY_AT &&
+              !scheduleParametersObject.notifyTimes) ||
+            (resolvedData.type && resolvedData.type === ScheduleType.NOTIFY_AT && !scheduleParametersObject.notifyTimes)
+          ) {
+            addValidationError(formatOutput(CUSTOM_ERROR_CODES.MISSING_JSON_PROPERTY, 'notifyTimes'));
+            return;
+          }
+        },
+      },
     }),
     ownerId,
   },
   hooks: {
-    resolveInput: addOwner,
+    resolveInput: addOwner as any,
   },
   access: baseAccessControl,
 });
