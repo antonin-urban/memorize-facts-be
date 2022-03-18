@@ -24,8 +24,6 @@ export const isCurrentUserData = ({ session, item }: { session: Session; item: B
  * Validate the current user is updating itself
  */
 export const isCurrentUserOrAdmin = ({ session, item }: { session: Session; item: User }) => {
-  console.debug('isCurrentUserOrAdmin', { session, item });
-  console.debug(session?.data.isAdmin);
   return session?.data.isAdmin || session?.data?.id === item.id;
 };
 

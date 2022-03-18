@@ -80,7 +80,6 @@ export const Schedule = list({
 
           let scheduleParametersObject: ScheduleParameters;
           try {
-            console.debug('validateInput', { resolvedData });
             scheduleParametersObject = JSON.parse(resolvedData.scheduleParameters);
           } catch (jsonParseError) {
             addValidationError(formatOutput(CUSTOM_ERROR_CODES.JSON_PARSE_FAIL, jsonParseError.message));
