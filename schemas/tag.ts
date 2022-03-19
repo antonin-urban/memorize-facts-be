@@ -10,6 +10,10 @@ export interface Tag extends BaseItemExtended {
 }
 
 export const Tag = list({
+  graphql: {
+    description:
+      'Tags used to categorize facts. Tags can be created logged users. Logged users can create/update/delete only own tags.',
+  },
   fields: {
     name: text({ validation: { isRequired: true } }),
     ownerId,

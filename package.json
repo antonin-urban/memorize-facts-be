@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/antonin-urban/memorize-facts-be",
   "author": "Antonín Urban <antonin.urban@tul.cz>",
-  "license": "MIT",
+  "license": "unlicensed",
   "private": true,
   "scripts": {
     "lint": "yarn tsc && npx eslint . --ext .ts",
@@ -14,7 +14,7 @@
     "dev": "keystone dev",
     "postinstall": "keystone postinstall",
     "start": "keystone start",
-    "test": "yarn lint && jest --runInBand --testTimeout=60000",
+    "test": "yarn lint && jest --runInBand --testTimeout=60000 --coverage",
     "test-only": "jest --runInBand --testTimeout=60000"
   },
   "dependencies": {

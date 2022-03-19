@@ -20,6 +20,9 @@ const passDeadlineUpdateRestriction = ({ item }: { item: Fact }) => {
 };
 
 export const Fact = list({
+  graphql: {
+    description: 'Facts can be created by logged users. Logged users can create/update/delete only own facts.',
+  },
   fields: {
     name: text({ validation: { isRequired: true } }),
     description: text({ validation: { isRequired: true } }),

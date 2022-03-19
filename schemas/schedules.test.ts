@@ -140,7 +140,7 @@ describe('Schedule validations tests', () => {
   );
 });
 
-describe('Schedule CRUD auth tests', () => {
+describe('Schedule access control test', () => {
   const TEST_SESSION_FAKE_ID = 'test-session-id';
   const OTHER_TEST_SESSION_FAKE_ID = 'other-test-session-id';
 

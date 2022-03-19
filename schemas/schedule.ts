@@ -58,6 +58,10 @@ export enum ScheduleType {
 }
 
 export const Schedule = list({
+  graphql: {
+    description:
+      'Schedules used to notify users about facts. Schedules can be created by logged users. Logged users can create/update/delete only own schedules.',
+  },
   fields: {
     name: text({ validation: { isRequired: true } }),
     type: select({

@@ -9,9 +9,14 @@ import { User } from '../schemas/user';
 export const isUserLogged = ({ session }: { session: Session }) => (session?.data?.id ? true : false);
 
 /**
+ * Validate there is not an user logged in
+ */
+export const isNotLoggedUser = ({ session }: { session: Session }) => (session?.data?.id ? false : true);
+
+/**
  * Validate the current user is an admin
  */
-export const isAdmin = ({ session }: { session: Session }) => session?.data.isAdmin;
+export const isAdmin = ({ session }: { session: Session }) => (session?.data?.isAdmin ? true : false);
 
 /**
  * Validate the current user is updating its own data
@@ -24,7 +29,14 @@ export const isCurrentUserData = ({ session, item }: { session: Session; item: B
  * Validate the current user is updating itself
  */
 export const isCurrentUserOrAdmin = ({ session, item }: { session: Session; item: User }) => {
-  return session?.data.isAdmin || session?.data?.id === item.id;
+  return session?.data?.isAdmin || session?.data?.id === item.id;
+};
+
+/**
+ * Validate the current user is admin or there is no user logged in
+ */
+export const isAdminOrNotLoggedUser = ({ session }: { session: Session }) => {
+  return session?.data?.isAdmin || isNotLoggedUser({ session });
 };
 
 /**
