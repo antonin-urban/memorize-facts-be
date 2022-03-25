@@ -8,7 +8,7 @@ import { formatOutput } from '../utils/utils';
 import { BaseItemExtended, CUSTOM_ERROR_CODES } from './interfaces';
 
 const SCHEDULE_PARAMETERS_DEFAULT: ScheduleParameters = {
-  interval: 0,
+  interval: 10,
   notifyTimes: ['08:00:00+00:00', '12:00:00+00:00', '16:00:00+00:00'],
   dayOfWeek: [true, true, true, true, true, true, true],
 };
@@ -84,7 +84,7 @@ export const Schedule = list({
 
           let scheduleParametersObject: ScheduleParameters;
           try {
-            scheduleParametersObject = JSON.parse(resolvedData.scheduleParameters);
+            scheduleParametersObject = resolvedData.scheduleParameters;
           } catch (jsonParseError) {
             addValidationError(formatOutput(CUSTOM_ERROR_CODES.JSON_PARSE_FAIL, jsonParseError.message));
             return;

@@ -11,11 +11,11 @@
     "lint": "yarn tsc && npx eslint . --ext .ts",
     "lint:fix": "yarn tsc && npx eslint . --ext .ts --fix",
     "deploy": "keystone build && keystone prisma migrate deploy",
-    "dev": "keystone dev",
+    "dev": "ENVIRONMENT=dev keystone dev",
     "postinstall": "keystone postinstall",
-    "start": "keystone start",
-    "test": "yarn lint && jest --runInBand --testTimeout=60000 --coverage",
-    "test-only": "jest --runInBand --testTimeout=60000"
+    "start": "ENVIRONMENT=prod keystone start",
+    "test": "yarn lint && ENVIRONMENT=test jest --runInBand --testTimeout=60000 --coverage",
+    "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.2",
