@@ -1,0 +1,42 @@
+name: Push and merge to master
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  test:
+    name: 'Run tests' 
+    runs-on: ubuntu-18.04
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+  container-job:
+    runs-on: ubuntu-latest
+    container: node:14
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5433
+        env:
+          POSTGRES_DB: memorize_facts_backend_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: dbpassword
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        
+      - name: Install dependencies
+        run: npm intall
+
+      - name: Run test
+        run: npm test
