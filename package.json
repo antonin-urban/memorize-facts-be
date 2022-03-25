@@ -9,13 +9,14 @@
   "private": true,
   "scripts": {
     "lint": "yarn tsc && npx eslint . --ext .ts",
-    "lint:fix": "yarn tsc && npx eslint . --ext .ts --fix",
+    "lint:fix": "yarn lint --fix",
     "deploy": "keystone build && keystone prisma migrate deploy",
     "dev": "ENVIRONMENT=dev keystone dev",
     "postinstall": "keystone postinstall",
     "start": "ENVIRONMENT=prod keystone start",
-    "test": "yarn lint && ENVIRONMENT=test jest --runInBand --testTimeout=60000 --coverage",
-    "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000"
+    "test": "yarn lint && yarn test-only",
+    "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000",
+    "test-only-coverage": "yarn test-only --coverage"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.2",
