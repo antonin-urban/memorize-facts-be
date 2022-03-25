@@ -20,7 +20,7 @@ jobs:
       postgres:
         image: postgres:latest
         ports:
-          - 5433
+          - 5433:5432
         env:
           POSTGRES_DB: memorize_facts_backend_test
           POSTGRES_USER: postgres
