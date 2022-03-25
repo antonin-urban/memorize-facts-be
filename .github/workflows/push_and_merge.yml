@@ -77,6 +77,6 @@ jobs:
 
       - name: Run tests
         run: yarn test-only-coverage
-      env:
-        DATABASE_PORT: 5432
+        env:
+          DATABASE_PORT: 5432
       
