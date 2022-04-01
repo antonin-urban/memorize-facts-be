@@ -12,4 +12,4 @@ on:
 jobs:
   build-and-test:
     name: "Build and test"
-    uses: ./.github/workflows/reusable/build_and_test.yml
+    uses: ./.github/workflows/build_and_test.yml
