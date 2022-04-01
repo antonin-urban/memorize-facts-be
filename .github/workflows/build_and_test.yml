@@ -1,8 +1,6 @@
 name: Reusable build and test workflow
 on:
   workflow_call:
-    inputs:
-    secrets:
 
 jobs:
   install-build-job:
