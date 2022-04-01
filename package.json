@@ -16,14 +16,12 @@
     "start": "ENVIRONMENT=prod keystone start",
     "test": "yarn lint && yarn test-only",
     "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000",
-    "test-only-coverage": "yarn test-only --coverage"
+    "test-only-coverage": "yarn test-only --coverage",
+    "release": "npx semantic-release"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.2",
-    "@keystone-6/core": "^1.0.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "typescript": "^4.6.2"
+    "@keystone-6/core": "^1.0.1"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
@@ -31,8 +29,12 @@
     "@typescript-eslint/parser": "^5.13.0",
     "eslint": "^8.10.0",
     "eslint-plugin-import": "^2.25.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.5.1",
     "prettier": "^2.6.0",
-    "ts-jest": "^27.1.3"
+    "semantic-release": "^19.0.2",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.6.2"
   }
 }
