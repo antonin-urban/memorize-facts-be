@@ -1,5 +1,13 @@
 Changelog
 
+### [1.0.1](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.0...v1.0.1) (2022-04-08)
+
+
+### Bug Fixes
+
+* **dependencies:** add ajv-formats dependecy and fix tests ([dc6a99a](https://github.com/antonin-urban/memorize-facts-be/commit/dc6a99a2a30ec2c1e7c67497f59666b160133db7))
+* **release:** add ajv to package.json ([b740ba2](https://github.com/antonin-urban/memorize-facts-be/commit/b740ba20f4974c2413941f87648cbe90f9a1558f))
+
 ## 1.0.0 (2022-04-08)
 
 
