@@ -76,7 +76,7 @@ describe('Schedule validations tests', () => {
       expect(data.createSchedule).toBeNull();
       expect(errors).toHaveLength(1);
       expect(errors[0].path).toEqual(['createSchedule']);
-      expect(errors[0].message).toMatch('schemaPath: #/properties/interval/minimum, error: should be >= 10');
+      expect(errors[0].message).toMatch('schemaPath: #/properties/interval/minimum, error: must be >= 10');
     }),
   );
 
