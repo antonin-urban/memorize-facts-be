@@ -19,7 +19,7 @@ export default config(
     db: {
       provider: 'postgresql',
       url: DATABASE_URL,
-      useMigrations: false,
+      useMigrations: true,
       idField: { kind: 'uuid' },
     },
     lists,

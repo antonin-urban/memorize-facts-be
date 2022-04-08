@@ -7,6 +7,10 @@
   "author": "Antonín Urban <antonin.urban@tul.cz>",
   "license": "unlicensed",
   "private": true,
+  "engines": {
+    "node": "^14.17",
+    "yarn": "^1.22"
+  },
   "scripts": {
     "lint": "yarn tsc && npx eslint . --ext .ts",
     "lint:fix": "yarn lint --fix",
