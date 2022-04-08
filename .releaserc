@@ -31,7 +31,8 @@
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
-            "BREAKING CHANGES"
+            "BREAKING CHANGES",
+            "BREAKING"
           ]
         }
       }
@@ -40,7 +41,21 @@
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "CHANGELOG.md"
+        "changelogFile": "CHANGELOG.md",
+        "preset": "angular",
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ]
+        },
+        "writerOpts": {
+          "commitsSort": [
+            "subject",
+            "scope"
+          ]
+        }
       }
     ],
     [
