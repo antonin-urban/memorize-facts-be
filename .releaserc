@@ -47,9 +47,9 @@
     ],
     [
       "@semantic-release/release-notes-generator",
-      [
-        {
-          "preset": "angular",
+      {
+        "preset": "conventionalcommits",
+        "config": {
           "parserOpts": {
             "noteKeywords": [
               "BREAKING CHANGE",
@@ -63,13 +63,15 @@
               "scope"
             ]
           }
-        },
-        "@semantic-release/changelog",
-        {
-          "changelogFile": "CHANGELOG.md",
-          "changelogTitle": "Changelog"
         }
-      ]
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "Changelog"
+      }
     ],
     [
       "@semantic-release/git",
