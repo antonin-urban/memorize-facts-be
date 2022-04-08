@@ -15,6 +15,7 @@
     "lint": "yarn tsc && npx eslint . --ext .ts",
     "lint:fix": "yarn lint --fix",
     "deploy": "keystone build && keystone prisma migrate deploy",
+    "build": "yarn deploy",
     "dev": "ENVIRONMENT=dev keystone dev",
     "postinstall": "keystone postinstall",
     "start": "ENVIRONMENT=prod keystone start",
