@@ -1,6 +1,7 @@
 import { list } from '@keystone-6/core';
 import { text, select, json } from '@keystone-6/core/fields';
 import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
 import { baseAccessControl } from '../utils/accessControlHelper';
 import { ownerId } from '../utils/fieldsHelper';
 import { addOwner } from '../utils/hooksHelper';
@@ -14,6 +15,7 @@ const SCHEDULE_PARAMETERS_DEFAULT: ScheduleParameters = {
 };
 
 const ajv = new Ajv();
+addFormats(ajv);
 
 const scheduleParametersJsonSchema: object = {
   type: 'object',
