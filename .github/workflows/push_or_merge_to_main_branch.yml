@@ -14,10 +14,6 @@ jobs:
     name: "Build and test"
     uses: ./.github/workflows/build_and_test.yml
 
-  build-and-test:
-    name: "Build and test"
-    uses: ./.github/workflows/build_and_test.yml
-
   release-job:
     name: "Autorelease using Semantic Release"
     runs-on: ubuntu-latest
