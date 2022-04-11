@@ -112,16 +112,6 @@
     "@semantic-release/git"
   ],
   "branches": [
-    "master",
-    {
-      "name": "bug",
-      "channel": "beta",
-      "prerelease": true
-    },
-    {
-      "name": "feature",
-      "channel": "beta",
-      "prerelease": true
-    }
+    "master"
   ]
 }
