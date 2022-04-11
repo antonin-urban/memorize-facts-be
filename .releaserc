@@ -76,20 +76,14 @@
               "hidden": false
             },
             {
+              "section": "Documentation",
               "type": "docs",
-              "hidden": true
+              "hidden": false
             },
             {
-              "type": "style",
-              "hidden": true
-            },
-            {
-              "type": "perf",
-              "hidden": true
-            },
-            {
+              "section": "Tests",
               "type": "test",
-              "hidden": true
+              "hidden": false
             }
           ]
         }
