@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.0.1](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.0...v1.0.1) (2022-04-11)
+
+
+### Documentation
+
+* **README:** update basic info about project ([6e81d0a](https://github.com/antonin-urban/memorize-facts-be/commit/6e81d0a5e4c762fe1e3bf1cd627314412bbfd3ce))
+
+
+### Other Changes
+
+* **dependencies:** update node.js to 16.14 ([8c17025](https://github.com/antonin-urban/memorize-facts-be/commit/8c170257f23e167cd9c5e92372da45fe7da75f68))
+* **SemanticRelease:** update rules for changelog ([c5ea609](https://github.com/antonin-urban/memorize-facts-be/commit/c5ea60973160a9b00e0997f683736187846e703c))
+
 ## 1.0.0 (2022-04-11)
 
 
