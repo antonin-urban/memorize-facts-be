@@ -19,7 +19,7 @@ As data storage, Keystone uses [PostgreSQL](https://www.postgresql.org/).
 
 Prerequisites:
 - Yarn
-- Node.js@14
+- Node.js@16.14
 - Docker (optional; for local development and testing)
 
 Installing dependencies:
