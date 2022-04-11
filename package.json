@@ -8,7 +8,7 @@
   "license": "unlicensed",
   "private": true,
   "engines": {
-    "node": "^14.17",
+    "node": "^16.14",
     "yarn": "^1.22"
   },
   "scripts": {
@@ -20,11 +20,10 @@
     "postinstall": "keystone postinstall",
     "start": "ENVIRONMENT=prod keystone start",
     "test": "yarn lint && yarn test-only",
-    "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000",
-    "test-only-coverage": "yarn test-only --coverage"
+    "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000 --coverage"
   },
   "dependencies": {
-    "@keystone-6/auth": "^1.0.2",
+    "@keystone-6/auth": "^2.0.0",
     "@keystone-6/core": "^1.0.1",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1"
@@ -35,10 +34,10 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "conventional-changelog-conventionalcommits": "^4.6.3",
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
+    "conventional-changelog-conventionalcommits": "^4.6.3",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.4",
