@@ -1,6 +1,6 @@
 {
   "name": "memorize-facts-be",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "GraphQL backend for Memorize Facts app",
   "main": "index.js",
   "repository": "https://github.com/antonin-urban/memorize-facts-be",
