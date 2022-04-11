@@ -1,4 +1,4 @@
-Changelog
+# Changelog
 
 ### [1.0.2](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.1...v1.0.2) (2022-04-08)
 
