@@ -41,58 +41,57 @@
       "@semantic-release/release-notes-generator",
       {
         "preset": "conventionalcommits",
-        "config": {
-          "parserOpts": {
-            "noteKeywords": [
-              "BREAKING CHANGE",
-              "BREAKING CHANGES",
-              "BREAKING"
-            ]
-          },
-          "writerOpts": {
-            "commitsSort": [
-              "subject",
-              "scope"
-            ]
-          },
-          "presetConfig": {
-            "header": "CHANGELOG",
-            "types": [
-              {
-                "type": "feat",
-                "section": "Features"
-              },
-              {
-                "type": "fix",
-                "section": "Bug Fixes"
-              },
-              {
-                "type": "chore",
-                "section": "Other Changes",
-                "hidden": false
-              },
-              {
-                "type": "docs",
-                "hidden": true
-              },
-              {
-                "type": "style",
-                "hidden": true
-              },
-              {
-                "type": "refactor",
-                "hidden": true
-              },
-              {
-                "type": "perf",
-                "hidden": true
-              },
-              {
-                "type": "test",
-                "hidden": true
-              }
-            ]
-          }
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ]
+        },
+        "writerOpts": {
+          "commitsSort": [
+            "subject",
+            "scope"
+          ]
+        },
+        "presetConfig": {
+          "header": "# Changelog",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "chore",
+              "section": "Other Changes",
+              "hidden": false
+            },
+            {
+              "section": "Other Changes",
+              "type": "refactor",
+              "hidden": false
+            },
+            {
+              "type": "docs",
+              "hidden": true
+            },
+            {
+              "type": "style",
+              "hidden": true
+            },
+            {
+              "type": "perf",
+              "hidden": true
+            },
+            {
+              "type": "test",
+              "hidden": true
+            }
+          ]
         }
       }
     ],
