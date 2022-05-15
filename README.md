@@ -36,8 +36,7 @@ For local development and testing, you can use Docker image in the root of the r
 docker-compose --file local-dev.yml up
 ```
 This will create two Docker containers:
-- **mf-postgres-dev** - postgres container for running project locally
-- **mf-postgres-test** - postgres container for testing
+- **mf-postgres-dev** - postgres container for running project locally and for testing
 - **mf-adminer** - database administration tool for viewing and managing databases
   - for `mf-postgres-dev` auth info, see `docker-compose.yml` file (`environment` section)
 If you want to run DB locally, you can look to **Production** section below for more details.

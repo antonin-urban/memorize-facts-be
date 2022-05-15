@@ -18,15 +18,5 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres:/var/lib/postgresql/data
-  db-test:
-    container_name: mf-postgres-test
-    image: postgres:latest
-    restart: always
-    ports:
-      - 5433:5432
-    environment:
-      POSTGRES_DB: memorize_facts_backend_test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: dbpassword
 volumes:
   postgres:
