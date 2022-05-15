@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.0.2](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.1...v1.0.2) (2022-05-15)
+
+
+### Bug Fixes
+
+* **Docker Compose:** remove needless second postgres container for testing ([aa0d919](https://github.com/antonin-urban/memorize-facts-be/commit/aa0d9195d85ed925ffd4e0368f6f96bc8f849123))
+
+
+### Other Changes
+
+* **code structure:** rename schemas folder to lists ([034dd37](https://github.com/antonin-urban/memorize-facts-be/commit/034dd37117e9801bd822bfb87690b9e07f570645))
+
 ### [1.0.1](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.0...v1.0.1) (2022-04-11)
 
 
