@@ -1,6 +1,6 @@
 import { KeystoneContext } from '@keystone-6/core/types';
 import { Session } from '../auth';
-import { BaseItemExtended } from '../schemas/interfaces';
+import { BaseItemExtended } from '../lists/interfaces';
 
 /**
  * Adds ownerId to the item from session

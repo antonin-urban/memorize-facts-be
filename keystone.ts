@@ -1,9 +1,10 @@
 // keystone.ts
 import { config } from '@keystone-6/core';
 import { statelessSessions } from '@keystone-6/core/session';
+import { KeystoneConfig, BaseKeystoneTypeInfo } from '@keystone-6/core/types';
 import { withAuth } from './auth';
 import { DATABASE_URL, SESSION_MAX_AGE, SESSION_SECRET } from './config';
-import { lists } from './schemas/schema';
+import { lists } from './lists';
 
 // Stateless sessions will store the listKey and itemId of the signed-in user in a cookie.
 // This session object will be made available on the context object used in hooks, access-control,
@@ -28,4 +29,4 @@ export default config(
       isAccessAllowed: (context) => !!context.session?.data,
     },
   }),
-);
+) as KeystoneConfig<BaseKeystoneTypeInfo>;
