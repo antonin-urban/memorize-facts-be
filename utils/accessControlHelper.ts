@@ -1,7 +1,7 @@
 import { ListAccessControl, BaseListTypeInfo } from '@keystone-6/core/types';
 import { Session } from '../auth';
-import { BaseItemExtended } from '../schemas/interfaces';
-import { User } from '../schemas/user';
+import { BaseItemExtended } from '../lists/interfaces';
+import { User } from '../lists/user';
 
 /**
  * Validate there is an user logged in
