@@ -264,6 +264,9 @@ type Schedule {
   name: String
   type: ScheduleTypeType
   scheduleParameters: JSON
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 enum ScheduleTypeType {
@@ -273,6 +276,7 @@ enum ScheduleTypeType {
 
 input ScheduleWhereUniqueInput {
   id: ID
+  frontendId: String
 }
 
 input ScheduleWhereInput {
@@ -282,6 +286,9 @@ input ScheduleWhereInput {
   id: IDFilter
   name: StringFilter
   type: ScheduleTypeTypeNullableFilter
+  deleted: BooleanFilter
+  updatedAt: DateTimeNullableFilter
+  frontendId: StringFilter
 }
 
 input ScheduleTypeTypeNullableFilter {
@@ -295,12 +302,18 @@ input ScheduleOrderByInput {
   id: OrderDirection
   name: OrderDirection
   type: OrderDirection
+  deleted: OrderDirection
+  updatedAt: OrderDirection
+  frontendId: OrderDirection
 }
 
 input ScheduleUpdateInput {
   name: String
   type: ScheduleTypeType
   scheduleParameters: JSON
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 input ScheduleUpdateArgs {
@@ -312,6 +325,9 @@ input ScheduleCreateInput {
   name: String
   type: ScheduleTypeType
   scheduleParameters: JSON
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 """

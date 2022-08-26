@@ -1,4 +1,4 @@
-import { KeystoneContext } from '@keystone-6/core/types';
+import { BaseItem, BaseListTypeInfo, KeystoneContext, KeystoneContextFromListTypeInfo } from '@keystone-6/core/types';
 import { Session } from '../auth';
 import { BaseItemExtended } from '../lists/interfaces';
 
@@ -13,4 +13,31 @@ export const addOwner = ({ resolvedData, context }: { resolvedData: BaseItemExte
     }
   }
   return resolvedData;
+};
+
+export const addDeleted = async ({
+  operation,
+  listKey,
+  originalItem,
+  context,
+}: {
+  operation: string;
+  listKey: string;
+  originalItem: BaseItem;
+  context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
+}) => {
+  if (operation === 'delete') {
+    const deletedData = JSON.stringify({
+      ...originalItem,
+      id: undefined,
+      ownerId: undefined,
+      updatedAt: undefined,
+      deleted: true,
+    });
+    await context.db[listKey].createOne({
+      data: {
+        ...JSON.parse(deletedData),
+      },
+    });
+  }
 };

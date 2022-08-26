@@ -21,25 +21,35 @@ export const ownerId = text({
   },
 });
 
-export const deleted = checkbox({
+export const frontendId = text({
   access: {
     update: () => false,
-    create: () => false,
   },
+  validation: { isRequired: true },
+  isIndexed: 'unique',
+  ui: {
+    itemView: {
+      fieldMode: 'read',
+    },
+    listView: {
+      fieldMode: 'read',
+    },
+  },
+});
+
+export const deleted = checkbox({
   ui: {
     createView: {
       fieldMode: 'hidden',
     },
     itemView: {
-      fieldMode: 'hidden',
+      fieldMode: 'read',
     },
     listView: {
-      fieldMode: 'hidden',
+      fieldMode: 'read',
     },
   },
-  graphql: {
-    omit: true,
-  },
+  graphql: {},
 });
 
 export const updatedAt = timestamp({

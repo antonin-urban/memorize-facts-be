@@ -331,8 +331,6 @@ describe('User access control test', () => {
       userTestSession.data.id = result.id;
 
       userId = result.id;
-      console.log(userId);
-      console.log(adminId);
     });
 
     afterAll(async () => {

@@ -1,8 +1,9 @@
 import { setupTestEnv, setupTestRunner, TestEnv } from '@keystone-6/core/testing';
 import { KeystoneContext } from '@keystone-6/core/types';
+import { v4 as uuidv4 } from 'uuid';
 import { Session } from '../auth';
 import config from '../keystone';
-import { ScheduleType, ScheduleParameters } from './schedule';
+import { ScheduleType, ScheduleParameters, Schedule } from './schedule';
 
 const runner = setupTestRunner({ config });
 
@@ -36,6 +37,7 @@ describe('Schedule validations tests', () => {
               name: ${SCHEDULE.name},
               type: ${SCHEDULE.type},
               scheduleParameters: ${SCHEDULE.scheduleParameters}
+              frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
             }
           ) {
             name
@@ -48,6 +50,7 @@ describe('Schedule validations tests', () => {
       expect(schedule.name).toEqual(SCHEDULE.name);
       expect(schedule.type).toEqual(SCHEDULE.type);
       expect(schedule.scheduleParameters).toEqual(SCHEDULE.scheduleParameters);
+      expect(schedule.frontendId).toBe(expect.any(String));
     });
   });
 
@@ -64,6 +67,7 @@ describe('Schedule validations tests', () => {
                 interval: 3,
                 dayOfWeek: [true, true, true, true, true, true, true]
               }
+              frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
             }
           ) {
             name
@@ -93,6 +97,7 @@ describe('Schedule validations tests', () => {
                 interval: 10,
                 dayOfWeek: [true, true, true, true, true, true, true]
               }
+              frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
             }
           ) {
             name
@@ -121,6 +126,7 @@ describe('Schedule validations tests', () => {
               scheduleParameters: { 
                 dayOfWeek: [true, true, true, true, true, true, true]
               }
+              frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
             }
           ) {
             name
@@ -138,6 +144,50 @@ describe('Schedule validations tests', () => {
       );
     }),
   );
+
+  it('marks item as deleted insted of deleting', async () => {
+    runner(async ({ graphQLRequest, context }) => {
+      const { body } = await graphQLRequest({
+        query: `mutation {
+          createSchedule(
+            data: {
+              name: ${SCHEDULE.name},
+                 type: ${SCHEDULE.type},
+              scheduleParameters: ${SCHEDULE.scheduleParameters}
+              frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
+            }
+          ) {
+            name
+            type
+            scheduleParameters
+          }
+        }`,
+      }).expect(200);
+
+      const schedule = body.data.createSchedule;
+      expect(schedule.deleted).toEqual(false);
+
+      const { error: deleteOperationError } = await graphQLRequest({
+        query: `mutation{
+          deleteSchedule(where:{
+          id: "${schedule.id}"
+          })
+          {
+            name
+          }
+        }`,
+      }).expect(200);
+
+      expect(deleteOperationError).toBe(false);
+
+      const resultInDB = (await context.db.Schedule.findOne({
+        where: { id: schedule.id },
+      })) as Schedule;
+
+      expect(resultInDB).not.toBeNull();
+      expect(resultInDB.deleted).toEqual(true);
+    });
+  });
 });
 
 describe('Schedule access control test', () => {
@@ -172,6 +222,7 @@ describe('Schedule access control test', () => {
                   interval: 10,
                   dayOfWeek: [true, true, true, true, true, true, true]
                 }
+                frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
               }
             ) {
               name
@@ -199,6 +250,7 @@ describe('Schedule access control test', () => {
                   interval: 10,
                   dayOfWeek: [true, true, true, true, true, true, true]
                 }
+                frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
               }
             ) {
               name
@@ -237,6 +289,7 @@ describe('Schedule access control test', () => {
             notifyTimes: ['08:00:00+00:00', '12:00:00+00:00', '16:00:00+00:00'],
             dayOfWeek: [true, true, true, true, true, true, true],
           },
+          frontendId: uuidv4(),
         },
         query: 'id',
       });
@@ -252,6 +305,7 @@ describe('Schedule access control test', () => {
             notifyTimes: ['08:00:00+00:00', '12:00:00+00:00', '16:00:00+00:00'],
             dayOfWeek: [true, true, true, true, true, true, true],
           },
+          frontendId: uuidv4(),
         },
         query: 'id',
       });
@@ -368,6 +422,7 @@ describe('Schedule access control test', () => {
             notifyTimes: ['08:00:00+00:00', '12:00:00+00:00', '16:00:00+00:00'],
             dayOfWeek: [true, true, true, true, true, true, true],
           },
+          frontendId: uuidv4(),
         },
         query: 'id',
       });
@@ -383,6 +438,7 @@ describe('Schedule access control test', () => {
             notifyTimes: ['08:00:00+00:00', '12:00:00+00:00', '16:00:00+00:00'],
             dayOfWeek: [true, true, true, true, true, true, true],
           },
+          frontendId: uuidv4(),
         },
         query: 'id',
       });
