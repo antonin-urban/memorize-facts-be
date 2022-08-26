@@ -27,13 +27,19 @@ model Fact {
   schedules   Schedule[] @relation("Fact_schedules")
   tags        Tag[]      @relation("Fact_tags")
   ownerId     String     @default("")
+  deleted     Boolean    @default(false)
+  updatedAt   DateTime?  @updatedAt
+  frontendId  String     @unique @default("")
 }
 
 model Tag {
-  id             String @id @default(uuid()) @postgresql.Uuid
-  name           String @default("")
-  ownerId        String @default("")
-  from_Fact_tags Fact[] @relation("Fact_tags")
+  id             String    @id @default(uuid()) @postgresql.Uuid
+  name           String    @default("")
+  ownerId        String    @default("")
+  deleted        Boolean   @default(false)
+  updatedAt      DateTime? @updatedAt
+  frontendId     String    @unique @default("")
+  from_Fact_tags Fact[]    @relation("Fact_tags")
 }
 
 model Schedule {

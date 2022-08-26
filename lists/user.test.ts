@@ -472,6 +472,7 @@ describe('User access control test', () => {
                   interval: 10,
                   dayOfWeek: [true, true, true, true, true, true, true]
                 }
+                frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
               }
             ) {
               id

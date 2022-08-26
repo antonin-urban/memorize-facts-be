@@ -124,6 +124,9 @@ type Fact {
     skip: Int! = 0
   ): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 scalar DateTime
@@ -131,6 +134,7 @@ scalar DateTime
 
 input FactWhereUniqueInput {
   id: ID
+  frontendId: String
 }
 
 input FactWhereInput {
@@ -144,6 +148,9 @@ input FactWhereInput {
   active: BooleanFilter
   schedules: ScheduleManyRelationFilter
   tags: TagManyRelationFilter
+  deleted: BooleanFilter
+  updatedAt: DateTimeNullableFilter
+  frontendId: StringFilter
 }
 
 input DateTimeNullableFilter {
@@ -175,6 +182,9 @@ input FactOrderByInput {
   description: OrderDirection
   deadline: OrderDirection
   active: OrderDirection
+  deleted: OrderDirection
+  updatedAt: OrderDirection
+  frontendId: OrderDirection
 }
 
 input FactUpdateInput {
@@ -184,6 +194,9 @@ input FactUpdateInput {
   active: Boolean
   schedules: ScheduleRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 input ScheduleRelateToManyForUpdateInput {
@@ -212,6 +225,9 @@ input FactCreateInput {
   active: Boolean
   schedules: ScheduleRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 input ScheduleRelateToManyForCreateInput {
@@ -227,10 +243,14 @@ input TagRelateToManyForCreateInput {
 type Tag {
   id: ID!
   name: String
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 input TagWhereUniqueInput {
   id: ID
+  frontendId: String
 }
 
 input TagWhereInput {
@@ -239,15 +259,24 @@ input TagWhereInput {
   NOT: [TagWhereInput!]
   id: IDFilter
   name: StringFilter
+  deleted: BooleanFilter
+  updatedAt: DateTimeNullableFilter
+  frontendId: StringFilter
 }
 
 input TagOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  deleted: OrderDirection
+  updatedAt: OrderDirection
+  frontendId: OrderDirection
 }
 
 input TagUpdateInput {
   name: String
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 input TagUpdateArgs {
@@ -257,6 +286,9 @@ input TagUpdateArgs {
 
 input TagCreateInput {
   name: String
+  deleted: Boolean
+  updatedAt: DateTime
+  frontendId: String
 }
 
 type Schedule {
