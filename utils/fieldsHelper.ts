@@ -53,10 +53,6 @@ export const deleted = checkbox({
 });
 
 export const updatedAt = timestamp({
-  access: {
-    update: () => false,
-    create: () => false,
-  },
   ui: {
     createView: {
       fieldMode: 'hidden',

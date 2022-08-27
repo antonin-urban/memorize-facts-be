@@ -2,6 +2,9 @@ import { BaseItem } from '@keystone-6/core/types';
 
 export type BaseItemExtended = BaseItem & {
   ownerId: string;
+  frontendId: string;
+  updatedAt: Date;
+  deleted: boolean;
 };
 
 export enum CUSTOM_ERROR_CODES {

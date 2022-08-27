@@ -1,10 +1,11 @@
 // keystone.ts
-import { config } from '@keystone-6/core';
+import { config, graphQLSchemaExtension } from '@keystone-6/core';
 import { statelessSessions } from '@keystone-6/core/session';
 import { KeystoneConfig, BaseKeystoneTypeInfo } from '@keystone-6/core/types';
 import { withAuth } from './auth';
 import { DATABASE_URL, SESSION_MAX_AGE, SESSION_SECRET } from './config';
 import { lists } from './lists';
+import { customTypeDefs, customResolvers } from './utils/gqlHelper';
 
 // Stateless sessions will store the listKey and itemId of the signed-in user in a cookie.
 // This session object will be made available on the context object used in hooks, access-control,
@@ -28,5 +29,6 @@ export default config(
     ui: {
       isAccessAllowed: (context) => !!context.session?.data,
     },
+    extendGraphqlSchema: graphQLSchemaExtension({ typeDefs: customTypeDefs, resolvers: customResolvers }),
   }),
 ) as KeystoneConfig<BaseKeystoneTypeInfo>;

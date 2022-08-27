@@ -502,6 +502,7 @@ describe('User access control test', () => {
                 description: "test description",
                 deadline: "2016-07-20T17:30:15+05:30",
                 active: true,
+                frontendId: "6357caeb-f4b7-4334-8780-319cf20ce067"
               }
             ) {
               id
@@ -529,6 +530,7 @@ describe('User access control test', () => {
             createTag(
               data:{
                 name: "test",
+                frontendId: "6357caeb-f4b7-4334-8780-319cf20ce067"
               }
             ) {
               id

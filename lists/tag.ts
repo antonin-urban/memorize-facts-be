@@ -7,7 +7,6 @@ import { BaseItemExtended } from './interfaces';
 
 export interface Tag extends BaseItemExtended {
   name: string;
-  frontendId: string;
 }
 
 export const Tag = list({

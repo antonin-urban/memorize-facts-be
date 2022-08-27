@@ -52,9 +52,6 @@ export interface Schedule extends BaseItemExtended {
   name: string;
   type: ScheduleType;
   scheduleParameters: ScheduleParameters;
-  deleted: boolean;
-  frontendId: string;
-  updatedAt: Date;
 }
 
 export enum ScheduleType {

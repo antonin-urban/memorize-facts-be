@@ -10,7 +10,6 @@ export interface Fact extends BaseItemExtended {
   description: string;
   deadline?: Date;
   active: boolean;
-  frontendId: string;
 }
 
 const passDeadlineUpdateRestriction = ({ item }: { item: Fact }) => {
