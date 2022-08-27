@@ -331,8 +331,6 @@ describe('User access control test', () => {
       userTestSession.data.id = result.id;
 
       userId = result.id;
-      console.log(userId);
-      console.log(adminId);
     });
 
     afterAll(async () => {
@@ -474,6 +472,7 @@ describe('User access control test', () => {
                   interval: 10,
                   dayOfWeek: [true, true, true, true, true, true, true]
                 }
+                frontendId: "9b29096a-3adc-43dc-831f-4808177d9249"
               }
             ) {
               id
@@ -503,6 +502,7 @@ describe('User access control test', () => {
                 description: "test description",
                 deadline: "2016-07-20T17:30:15+05:30",
                 active: true,
+                frontendId: "6357caeb-f4b7-4334-8780-319cf20ce067"
               }
             ) {
               id
@@ -530,6 +530,7 @@ describe('User access control test', () => {
             createTag(
               data:{
                 name: "test",
+                frontendId: "6357caeb-f4b7-4334-8780-319cf20ce067"
               }
             ) {
               id

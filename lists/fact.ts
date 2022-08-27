@@ -1,8 +1,8 @@
 import { list } from '@keystone-6/core';
 import { text, timestamp, checkbox, relationship } from '@keystone-6/core/fields';
 import { baseAccessControl } from '../utils/accessControlHelper';
-import { ownerId } from '../utils/fieldsHelper';
-import { addOwner } from '../utils/hooksHelper';
+import { deleted, ownerId, updatedAt, frontendId } from '../utils/fieldsHelper';
+import { addDeleted, addOwner } from '../utils/hooksHelper';
 import { BaseItemExtended } from './interfaces';
 
 export interface Fact extends BaseItemExtended {
@@ -31,9 +31,13 @@ export const Fact = list({
     schedules: relationship({ ref: 'Schedule', many: true }), //many to many
     tags: relationship({ ref: 'Tag', many: true }), //many to many
     ownerId,
+    deleted,
+    updatedAt,
+    frontendId,
   },
   hooks: {
     resolveInput: addOwner as any,
+    afterOperation: addDeleted,
   },
   access: baseAccessControl,
 });

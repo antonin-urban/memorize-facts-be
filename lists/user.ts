@@ -1,11 +1,11 @@
 import { list } from '@keystone-6/core';
 import { text, password, checkbox } from '@keystone-6/core/fields';
 import {
-  ownerOnlyAccessFilter,
-  isUserLogged,
-  isCurrentUserOrAdmin,
-  isAdminOrNotLoggedUser,
   isAdmin,
+  isUserLogged,
+  isAdminOrNotLoggedUser,
+  ownerOnlyAccessFilter,
+  isCurrentUserOrAdmin,
 } from '../utils/accessControlHelper';
 import { BaseItemExtended } from './interfaces';
 

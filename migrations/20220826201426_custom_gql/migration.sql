@@ -19,6 +19,9 @@ CREATE TABLE "Fact" (
     "deadline" TIMESTAMP(3),
     "active" BOOLEAN NOT NULL DEFAULT false,
     "ownerId" TEXT NOT NULL DEFAULT E'',
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "updatedAt" TIMESTAMP(3),
+    "frontendId" TEXT NOT NULL DEFAULT E'',
 
     CONSTRAINT "Fact_pkey" PRIMARY KEY ("id")
 );
@@ -28,6 +31,9 @@ CREATE TABLE "Tag" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL DEFAULT E'',
     "ownerId" TEXT NOT NULL DEFAULT E'',
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "updatedAt" TIMESTAMP(3),
+    "frontendId" TEXT NOT NULL DEFAULT E'',
 
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
 );
@@ -39,6 +45,9 @@ CREATE TABLE "Schedule" (
     "type" "ScheduleTypeType" NOT NULL DEFAULT E'NOTIFY_EVERY',
     "scheduleParameters" JSONB DEFAULT '{"interval":10,"notifyTimes":["08:00:00+00:00","12:00:00+00:00","16:00:00+00:00"],"dayOfWeek":[true,true,true,true,true,true,true]}',
     "ownerId" TEXT NOT NULL DEFAULT E'',
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "updatedAt" TIMESTAMP(3),
+    "frontendId" TEXT NOT NULL DEFAULT E'',
 
     CONSTRAINT "Schedule_pkey" PRIMARY KEY ("id")
 );
@@ -57,6 +66,15 @@ CREATE TABLE "_Fact_tags" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Fact_frontendId_key" ON "Fact"("frontendId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_frontendId_key" ON "Tag"("frontendId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Schedule_frontendId_key" ON "Schedule"("frontendId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_Fact_schedules_AB_unique" ON "_Fact_schedules"("A", "B");

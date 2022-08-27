@@ -3,8 +3,8 @@ import { text, select, json } from '@keystone-6/core/fields';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import { baseAccessControl } from '../utils/accessControlHelper';
-import { ownerId } from '../utils/fieldsHelper';
-import { addOwner } from '../utils/hooksHelper';
+import { deleted, frontendId, ownerId, updatedAt } from '../utils/fieldsHelper';
+import { addDeleted, addOwner } from '../utils/hooksHelper';
 import { formatOutput } from '../utils/utils';
 import { BaseItemExtended, CUSTOM_ERROR_CODES } from './interfaces';
 
@@ -133,9 +133,13 @@ export const Schedule = list({
       },
     }),
     ownerId,
+    deleted,
+    updatedAt,
+    frontendId,
   },
   hooks: {
     resolveInput: addOwner as any,
+    afterOperation: addDeleted,
   },
   access: baseAccessControl,
 });
