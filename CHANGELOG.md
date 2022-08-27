@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.2...v1.1.0) (2022-08-27)
+
+
+### Features
+
+* implement frontend sync for tags ([a184e13](https://github.com/antonin-urban/memorize-facts-be/commit/a184e13d5eedb4d31949b8a08929decacec94479))
+
+
+### Other Changes
+
+* **linter:** update rules ([e310e7a](https://github.com/antonin-urban/memorize-facts-be/commit/e310e7a3b119081f4cceeb5320772a9394b483a8))
+
 ### [1.0.2](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.1...v1.0.2) (2022-05-15)
 
 
