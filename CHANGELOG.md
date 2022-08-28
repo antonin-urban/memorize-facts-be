@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.2](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.1...v1.1.2) (2022-08-28)
+
+
+### Bug Fixes
+
+* try catch in custom resolver ([bac20fa](https://github.com/antonin-urban/memorize-facts-be/commit/bac20fad02e8f2bf6c77b994e707d8e9734de9da))
+
 ### [1.1.1](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.0...v1.1.1) (2022-08-28)
 
 
