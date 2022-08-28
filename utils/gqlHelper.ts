@@ -1,6 +1,5 @@
 import { GraphQLResolver, KeystoneContext } from '@keystone-6/core/types';
 import { Tag } from '../lists/tag';
-import { isUserLogged } from './accessControlHelper';
 
 export const customTypeDefs = `
     type Query {
@@ -26,88 +25,144 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
         limit: number;
       },
       context: KeystoneContext,
-    ) => {
-      if (!lastFrontendId || !minUpdatedAt || limit < 1) {
-        return [];
-      }
+    ): Promise<Tag[]> => {
+      try {
+        console.log('incoming feedForRxDBReplicationTag...');
 
-      if (!isUserLogged(context.session)) {
-        return null;
-      }
-
-      const documents = (await context.query.Tag.findMany({})) as Tag[];
-
-      if (documents.length === 0) {
-        return [];
-      }
-
-      // sorted by updatedAt first and the id as second
-      const sortedDocuments = [...documents].sort((a, b) => {
-        if (a.updatedAt > b.updatedAt) return 1;
-        if (a.updatedAt < b.updatedAt) return -1;
-        if (a.updatedAt === b.updatedAt) {
-          if (a.frontendId > b.frontendId) return 1;
-          if (a.frontendId < b.frontendId) return -1;
-          else return 0;
+        if ((!lastFrontendId && lastFrontendId !== '') || !minUpdatedAt || limit < 1) {
+          console.error('Sync feedForRxDBReplicationTag error: invalid parameters', {
+            lastFrontendId,
+            minUpdatedAt,
+            limit,
+          });
+          throw new Error('Invalid parameters');
         }
-      });
 
-      // only return documents newer then the input document
-      const filterForMinUpdatedAtAndId = sortedDocuments.filter((doc) => {
-        if (doc.updatedAt < minUpdatedAt) return false;
-        if (doc.updatedAt > minUpdatedAt) return true;
-        if (doc.updatedAt === minUpdatedAt) {
-          // if updatedAt is equal, compare by id
-          if (doc.frontendId > lastFrontendId) return true;
-          else return false;
+        const documents = (await context.db.Tag.findMany({}).catch((e) => {
+          console.error('Sync feedForRxDBReplicationTag error: could not find tags', e);
+          throw e;
+        })) as Tag[];
+
+        if (documents.length === 0) {
+          return [];
         }
-      });
 
-      // only return some documents in one batch
-      const limited = filterForMinUpdatedAtAndId.slice(0, limit);
+        // sorted by updatedAt first and the id as second
+        const sortedDocuments = [...documents].sort((a, b) => {
+          if (a.updatedAt > b.updatedAt) return 1;
+          if (a.updatedAt < b.updatedAt) return -1;
+          if (a.updatedAt === b.updatedAt) {
+            if (a.frontendId > b.frontendId) return 1;
+            if (a.frontendId < b.frontendId) return -1;
+            else return 0;
+          }
+        });
 
-      return limited;
+        if (!sortedDocuments) {
+          return [];
+        }
+
+        // only return documents newer then the input document
+        const filterForMinUpdatedAtAndId = sortedDocuments.filter((doc) => {
+          if (doc.updatedAt < minUpdatedAt) return false;
+          if (doc.updatedAt > minUpdatedAt) return true;
+          if (doc.updatedAt === minUpdatedAt) {
+            // if updatedAt is equal, compare by id
+            if (doc.frontendId > lastFrontendId) return true;
+            else return false;
+          }
+        });
+
+        // only return some documents in one batch
+        const limited = filterForMinUpdatedAtAndId.slice(0, limit);
+
+        return limited;
+      } catch (e) {
+        console.error('Sync feedForRxDBReplicationTag error', e);
+        throw e;
+      }
     },
   },
   Mutation: {
-    setRxDBReplicationTags: (root, { tags }: { tags: Tag[] }, context: KeystoneContext) => {
-      if (!tags) {
-        return null;
-      }
+    setRxDBReplicationTags: async (root, { tags }: { tags: Tag[] }, context: KeystoneContext): Promise<Tag> => {
+      try {
+        console.log('incoming setRxDBReplicationTags...');
 
-      if (!isUserLogged(context.session)) {
-        return null;
-      }
+        if (!tags) {
+          console.error('Sync setRxDBReplicationTags error: invalid parameters', { tags });
+          throw new Error('Invalid parameters');
+        }
 
-      let lastOne = null;
-      Promise.all(
-        tags.map(async (updatedTag) => {
-          let found = null;
-          const foundTags = await context.query.Tag.findMany({
-            where: { frontendId: { equals: updatedTag.frontendId } },
-          });
+        let lastOne: Tag = null;
+        await Promise.all(
+          tags.map(async (updatedTag) => {
+            let found: Tag = null;
 
-          if (foundTags && foundTags.length > 0) {
-            console.error('Sync error: found mulitple tags with same id, updating the newer one', found[0]);
-            found = [...(foundTags as any)].sort((x) => x.updatedAt)[0];
-          } else if (foundTags && foundTags.length === 1) {
-            found = foundTags[0];
-          }
-
-          if (found) {
-            await context.query.Tag.updateOne({
-              where: { frontendId: updatedTag.frontendId },
-              data: { name: updatedTag.name, updatedAt: updatedTag.updatedAt, deleted: updatedTag.deleted },
+            const foundTags = await context.db.Tag.findMany({
+              where: {
+                frontendId: { equals: updatedTag.frontendId },
+              },
+            }).catch((e) => {
+              console.error('Sync setRxDBReplicationTags error: could not find tag', e);
+              return;
             });
-          } else {
-            await context.query.Tag.createOne({ data: updatedTag });
-          }
 
-          lastOne = updatedTag;
-        }),
-      );
-      // returns the last of the mutated documents
-      return lastOne;
+            if (foundTags && foundTags.length > 1) {
+              found = [...(foundTags as Tag[])].sort((x) => x.updatedAt?.getTime())[0];
+              await Promise.all(
+                foundTags.map(async (tag: Tag) => {
+                  if (tag.id.toString() !== found.id.toString() && !tag.deleted) {
+                    console.warn(
+                      'Sync setRxDBReplicationTags warning: found mulitple tags with same frontend id, updating the newer one, deleting the older one',
+                      tag,
+                    );
+                    await context.db.Tag.deleteOne({ where: { id: tag.id.toString() } });
+                  }
+                }),
+              );
+            } else if (foundTags && foundTags.length === 1) {
+              found = foundTags[0] as Tag;
+            }
+
+            if (found) {
+              await context.query.Tag.updateOne({
+                where: { id: found.id.toString() },
+                data: {
+                  name: updatedTag.name,
+                  deleted: updatedTag.deleted,
+                },
+              }).catch((e) => {
+                console.error('Sync error: could not update tag', e);
+                lastOne = { ...updatedTag, id: found.id };
+                return;
+              });
+
+              lastOne = { ...updatedTag, id: found.id };
+            } else {
+              const inserted = (await context.query.Tag.createOne({
+                data: {
+                  frontendId: updatedTag.frontendId,
+                  name: updatedTag.name,
+                  deleted: updatedTag.deleted,
+                },
+              }).catch((e) => {
+                console.error('Sync error: could not create tag', e);
+                lastOne = { ...updatedTag, id: found.id };
+                return;
+              })) as Tag;
+
+              if (inserted?.id?.toString()) {
+                lastOne = { ...updatedTag, id: inserted.id.toString() };
+              }
+            }
+          }),
+        );
+        // returns the last of the mutated documents
+        return lastOne;
+      } catch (e) {
+        console.error('Sync setRxDBReplicationTags error:', e);
+        throw e;
+      }
     },
   },
 };
