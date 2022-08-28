@@ -68,15 +68,6 @@ CREATE TABLE "_Fact_tags" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Fact_frontendId_key" ON "Fact"("frontendId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Tag_frontendId_key" ON "Tag"("frontendId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Schedule_frontendId_key" ON "Schedule"("frontendId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "_Fact_schedules_AB_unique" ON "_Fact_schedules"("A", "B");
 
 -- CreateIndex
@@ -89,13 +80,13 @@ CREATE UNIQUE INDEX "_Fact_tags_AB_unique" ON "_Fact_tags"("A", "B");
 CREATE INDEX "_Fact_tags_B_index" ON "_Fact_tags"("B");
 
 -- AddForeignKey
-ALTER TABLE "_Fact_schedules" ADD FOREIGN KEY ("A") REFERENCES "Fact"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_Fact_schedules" ADD CONSTRAINT "_Fact_schedules_A_fkey" FOREIGN KEY ("A") REFERENCES "Fact"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_Fact_schedules" ADD FOREIGN KEY ("B") REFERENCES "Schedule"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_Fact_schedules" ADD CONSTRAINT "_Fact_schedules_B_fkey" FOREIGN KEY ("B") REFERENCES "Schedule"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_Fact_tags" ADD FOREIGN KEY ("A") REFERENCES "Fact"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_Fact_tags" ADD CONSTRAINT "_Fact_tags_A_fkey" FOREIGN KEY ("A") REFERENCES "Fact"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_Fact_tags" ADD FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_Fact_tags" ADD CONSTRAINT "_Fact_tags_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
