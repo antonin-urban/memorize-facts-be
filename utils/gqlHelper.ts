@@ -26,7 +26,15 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
       },
       context: KeystoneContext,
     ) => {
+      if (!lastFrontendId || !minUpdatedAt || limit < 1) {
+        return [];
+      }
+
       const documents = (await context.db.Tag.findMany({})) as Tag[];
+
+      if (documents.length === 0) {
+        return [];
+      }
 
       // sorted by updatedAt first and the id as second
       const sortedDocuments = [...documents].sort((a, b) => {
@@ -58,6 +66,10 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
   },
   Mutation: {
     setRxDBReplicationTags: (root, { tags }: { tags: Tag[] }, context: KeystoneContext) => {
+      if (!tags) {
+        return null;
+      }
+
       let lastOne = null;
       Promise.all(
         tags.map(async (updatedTag) => {
