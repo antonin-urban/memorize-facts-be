@@ -1,5 +1,6 @@
 import { GraphQLResolver, KeystoneContext } from '@keystone-6/core/types';
 import { Tag } from '../lists/tag';
+import { isUserLogged } from './accessControlHelper';
 
 export const customTypeDefs = `
     type Query {
@@ -30,7 +31,11 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
         return [];
       }
 
-      const documents = (await context.db.Tag.findMany({})) as Tag[];
+      if (!isUserLogged(context.session)) {
+        return null;
+      }
+
+      const documents = (await context.query.Tag.findMany({})) as Tag[];
 
       if (documents.length === 0) {
         return [];
@@ -70,11 +75,17 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
         return null;
       }
 
+      if (!isUserLogged(context.session)) {
+        return null;
+      }
+
       let lastOne = null;
       Promise.all(
         tags.map(async (updatedTag) => {
           let found = null;
-          const foundTags = await context.db.Tag.findMany({ where: { frontendId: { equals: updatedTag.frontendId } } });
+          const foundTags = await context.query.Tag.findMany({
+            where: { frontendId: { equals: updatedTag.frontendId } },
+          });
 
           if (foundTags && foundTags.length > 0) {
             console.error('Sync error: found mulitple tags with same id, updating the newer one', found[0]);
@@ -84,12 +95,12 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
           }
 
           if (found) {
-            await context.db.Tag.updateOne({
+            await context.query.Tag.updateOne({
               where: { frontendId: updatedTag.frontendId },
               data: { name: updatedTag.name, updatedAt: updatedTag.updatedAt, deleted: updatedTag.deleted },
             });
           } else {
-            await context.db.Tag.createOne({ data: updatedTag });
+            await context.query.Tag.createOne({ data: updatedTag });
           }
 
           lastOne = updatedTag;
