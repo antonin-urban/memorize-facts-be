@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.3](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.2...v1.1.3) (2022-08-28)
+
+
+### Bug Fixes
+
+* wrong inner query in sync custom query ([5b2948b](https://github.com/antonin-urban/memorize-facts-be/commit/5b2948bd9ac0398ab03e205a165cb5964d51119e))
+
 ### [1.1.2](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.1...v1.1.2) (2022-08-28)
 
 
