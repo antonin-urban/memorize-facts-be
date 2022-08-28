@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.4](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.3...v1.1.4) (2022-08-28)
+
+
+### Bug Fixes
+
+* wrong where on tags in sync query ([10e03c7](https://github.com/antonin-urban/memorize-facts-be/commit/10e03c7070d21c5e818d2ea2f9294e6279969df9))
+
 ### [1.1.3](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.2...v1.1.3) (2022-08-28)
 
 
