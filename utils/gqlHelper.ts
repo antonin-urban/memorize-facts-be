@@ -62,7 +62,7 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
       Promise.all(
         tags.map(async (updatedTag) => {
           let found = null;
-          const foundTags = await context.db.Tag.findMany({ where: { frontendId: updatedTag.frontendId } });
+          const foundTags = await context.db.Tag.findMany({ where: { frontendId: { equals: updatedTag.frontendId } } });
 
           if (foundTags && foundTags.length > 0) {
             console.error('Sync error: found mulitple tags with same id, updating the newer one', found[0]);
