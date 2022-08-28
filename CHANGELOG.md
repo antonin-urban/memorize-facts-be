@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.7](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.6...v1.1.7) (2022-08-28)
+
+
+### Bug Fixes
+
+* sync query refactor ([90789b0](https://github.com/antonin-urban/memorize-facts-be/commit/90789b08ef4b4c2bc7e5e67719dc7cb33c592bde))
+
 ### [1.1.6](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.5...v1.1.6) (2022-08-28)
 
 
