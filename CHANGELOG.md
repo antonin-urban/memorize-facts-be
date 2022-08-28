@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.1](https://github.com/antonin-urban/memorize-facts-be/compare/v1.1.0...v1.1.1) (2022-08-28)
+
+
+### Bug Fixes
+
+* update dependencies and remove unique constrain from frontendId field ([2967a1f](https://github.com/antonin-urban/memorize-facts-be/commit/2967a1f3a9885faa6ef721ce8d03fd87ce21b0fb))
+
 ## [1.1.0](https://github.com/antonin-urban/memorize-facts-be/compare/v1.0.2...v1.1.0) (2022-08-27)
 
 
