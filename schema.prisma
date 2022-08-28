@@ -2,8 +2,9 @@
 // Modify your Keystone config when you want to change this.
 
 datasource postgresql {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "postgresql"
 }
 
 generator client {
@@ -29,7 +30,7 @@ model Fact {
   ownerId     String     @default("")
   deleted     Boolean    @default(false)
   updatedAt   DateTime?  @updatedAt
-  frontendId  String     @unique @default("")
+  frontendId  String     @default("")
 }
 
 model Tag {
@@ -38,7 +39,7 @@ model Tag {
   ownerId        String    @default("")
   deleted        Boolean   @default(false)
   updatedAt      DateTime? @updatedAt
-  frontendId     String    @unique @default("")
+  frontendId     String    @default("")
   from_Fact_tags Fact[]    @relation("Fact_tags")
 }
 
@@ -50,7 +51,7 @@ model Schedule {
   ownerId             String           @default("")
   deleted             Boolean          @default(false)
   updatedAt           DateTime?        @updatedAt
-  frontendId          String           @unique @default("")
+  frontendId          String           @default("")
   from_Fact_schedules Fact[]           @relation("Fact_schedules")
 }
 

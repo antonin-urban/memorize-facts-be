@@ -58,20 +58,22 @@ export const customResolvers: Record<string, Record<string, GraphQLResolver<any>
   },
   Mutation: {
     setRxDBReplicationTags: (root, { tags }: { tags: Tag[] }, context: KeystoneContext) => {
-      let lastOne;
-      tags.forEach(async (updatedTag) => {
-        const found = await context.db.Tag.findOne({ where: { frontendId: updatedTag.frontendId } });
-        if (found) {
-          await context.db.Tag.updateOne({
-            where: { frontendId: updatedTag.frontendId },
-            data: { name: updatedTag.name, updatedAt: updatedTag.updatedAt, deleted: updatedTag.deleted },
-          });
-        } else {
-          await context.db.Tag.createOne({ data: updatedTag });
-        }
+      let lastOne = null;
+      Promise.all(
+        tags.map(async (updatedTag) => {
+          const found = await context.db.Tag.findOne({ where: { frontendId: updatedTag.frontendId } });
+          if (found) {
+            await context.db.Tag.updateOne({
+              where: { frontendId: updatedTag.frontendId },
+              data: { name: updatedTag.name, updatedAt: updatedTag.updatedAt, deleted: updatedTag.deleted },
+            });
+          } else {
+            await context.db.Tag.createOne({ data: updatedTag });
+          }
 
-        lastOne = updatedTag;
-      });
+          lastOne = updatedTag;
+        }),
+      );
       // returns the last of the mutated documents
       return lastOne;
     },

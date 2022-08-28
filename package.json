@@ -23,8 +23,8 @@
     "test-only": "ENVIRONMENT=test jest --runInBand --testTimeout=60000 --coverage"
   },
   "dependencies": {
-    "@keystone-6/auth": "^2.0.0",
-    "@keystone-6/core": "^1.0.1",
+    "@keystone-6/auth": "^4.0.1",
+    "@keystone-6/core": "^2.2.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1"
   },

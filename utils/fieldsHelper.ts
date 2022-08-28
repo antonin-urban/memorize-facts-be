@@ -26,7 +26,7 @@ export const frontendId = text({
     update: () => false,
   },
   validation: { isRequired: true },
-  isIndexed: 'unique',
+  //isIndexed: 'unique', // cannot be unique
   ui: {
     itemView: {
       fieldMode: 'read',
